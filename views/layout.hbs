@@ -1,10 +1,46 @@
-<!DOCTYPE html>
 <html>
-  <head>
-    <title>{{title}}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    {{{body}}}
-  </body>
+<head>
+  <meta charset='UTF-8' />
+  <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <script>
+    var app = {}
+    window.app = app
+  </script>
+  <!-- Fontawesome -->
+  <link type='text/css' href='/vendor/@fortawesome/fontawesome-free/css/all.min.css' rel='stylesheet' />
+
+  <!-- Pixel CSS -->
+  <link type='text/css' href='/css/neumorphism.css' rel='stylesheet' />
+
+  <link type='text/css' href='/css/style.css' rel='stylesheet' />
+  <script src='/js/cytoscape.min.js'></script>
+  <script src='/js/vue.min.js'></script>
+
+  <title>{{title}}</title>
+</head>
+
+<body>
+  {{{body}}}
+
+  <!-- Core -->
+  <script src="/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="/vendor/popper.js/dist/umd/popper.min.js"></script>
+  <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/vendor/headroom.js/dist/headroom.min.js"></script>
+
+  <!-- Vendor JS -->
+  <script src="/vendor/onscreen/dist/on-screen.umd.min.js"></script>
+  <script src="/vendor/nouislider/distribute/nouislider.min.js"></script>
+  <script src="/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <script src="/vendor/waypoints/lib/jquery.waypoints.min.js"></script>
+  <script src="/vendor/jarallax/dist/jarallax.min.js"></script>
+  <script src="/vendor/jquery.counterup/jquery.counterup.min.js"></script>
+  <script src="/vendor/jquery-countdown/dist/jquery.countdown.min.js"></script>
+  <script src="/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+  <script src="/vendor/prismjs/prism.js"></script>
+
+  <script src="https://buttons.github.io/buttons.js"></script>
+  <script src="/js/script.js"></script>
+</body>
 </html>
