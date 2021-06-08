@@ -1,64 +1,84 @@
-<section id="app-markov">
-    <div class="section bg-primary text-dark section-lg">
-      <dov class="container">
-        <div class="row justify-content-center text-center pt-6">
-          <div class="col-lg-8 col-xl-8">
-            <h1 class="display-2 mb-3">{{title}}</h1>
-          </div>
-        </div>
-      </dov>
-
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-12">
-
-            <div id="input-slider-range"
-            :data-range-value-min="100"
-            :data-range-value-max="500">
-            </div>
-            <div class="row d-none">
-               <div class="col-6">
-                  <span class="range-slider-value value-low"
-                  :data-range-value-low="200" id="input-slider-range-value-low"></span>
-               </div>
-            </div>
-
-          </div>
-          <div class="col-6">
-            <div class="mb-5">
-              <div class="table-responsive-sm shadow-soft rounded overflow-auto" style="max-height: 400px;">
-                <table class="table">
-                  <tbody>
-
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-6">
-
-            <div id="cy"
-               class="card bg-primary shadow-inset border-light p-3">
-              <div class="card-body shadow-soft border border-light rounded p-4">
-                <h4 class="mb-3">Regular</h4>
-                <div class="d-flex mb-3">
-                   <span class="h5 mb-0">$</span>
-                   <span class="price display-2 text-dark mb-0">199</span>
-               </div>
-                <p class="mb-4">
-                  So, get Website Backup and stop worrying about data loss. Get back to doing what
-                  you do best – running your business and making money.
-               </p>
-               <button type="button"
-                  class="btn btn-primary btn-block rounded-bottom">Add to Cart
-               </button>
-              </div>
-            </div>
-
-          </div>
-
+<section id='app-markov'>
+  <div class='section bg-primary text-dark section-lg'>
+    <dov class='container'>
+      <div class='row justify-content-center text-center pt-6'>
+        <div class='col-lg-8 col-xl-8'>
+          <h1 class='display-2 mb-3'>{{title}}</h1>
         </div>
       </div>
+    </dov>
+
+    <div class='container'>
+      <div class='row justify-content-center'>
+        <div class='col-12'>
+
+          <div
+            id='input-slider-range'
+            :data-range-value-min='nodes.min'
+            :data-range-value-max='nodes.max'
+          >
+          </div>
+          <div class='row d-none'>
+            <div class='col-6'>
+              <span
+                class='range-slider-value value-low'
+                :data-range-value-low='nodes.default'
+                id='input-slider-range-value-low'
+              >
+              </span>
+            </div>
+          </div>
+
+        </div>
+        <div class='col-6'>
+          <div class='mb-5'>
+            <div
+              class='table-responsive-sm shadow-soft rounded overflow-auto'
+              style='height: 350px;'
+            >
+              <table class='table'>
+                <tbody>
+                  <tr>
+                    <th class='border-0'>&nbsp;</th>
+                    <th
+                      v-for='(row, index) in matrix.length'
+                      class='border-0 text-center'
+                      :key='index'
+                    >
+                      \{{ index }}
+                    </th>
+                  </tr>
+
+                  <tr v-for='(row, x) in matrix' :key='x'>
+                    <th class='border-0'>\{{x}}</th>
+
+                    <template v-for='(cell, y) in row' :key='y'>
+                      <c-cell
+                        class='border-0'
+                        v-model.number='cell.value'
+                        :title="x+', '+y"
+                      ></c-cell>
+                    </template>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class='col-6'>
+
+          <div
+          id='cy'
+          style='height: 350px;'
+          class='card bg-primary shadow-inset border-light'>
+
+          </div>
+
+        </div>
+
+      </div>
     </div>
-  </section>
+  </div>
+</section>

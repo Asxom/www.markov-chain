@@ -1,6 +1,18 @@
 #cy {
-
- }
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+}
+.popper-div { /* just an example */
+  border: 1px solid red;
+  background: #fff;
+  z-index: 11;
+  padding: 0.25em;
+  pointer-events: none;
+}
  /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

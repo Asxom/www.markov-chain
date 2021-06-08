@@ -1,4 +1,6 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
+
 <head>
   <meta charset='UTF-8' />
   <meta http-equiv='X-UA-Compatible' content='IE=edge' />
@@ -6,16 +8,29 @@
   <script>
     var app = {}
     window.app = app
+    var cy = {}
+    window.cy = cy
   </script>
   <!-- Fontawesome -->
   <link type='text/css' href='/vendor/@fortawesome/fontawesome-free/css/all.min.css' rel='stylesheet' />
 
   <!-- Pixel CSS -->
   <link type='text/css' href='/css/neumorphism.css' rel='stylesheet' />
-
   <link type='text/css' href='/css/style.css' rel='stylesheet' />
-  <script src='/js/cytoscape.min.js'></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.js"></script>
   <script src='/js/vue.min.js'></script>
+
+  <script>
+    Vue.config.devtools = true
+    Vue.config.errorHandler = function (err, vm, info) {
+      console.log({
+        err,
+        vm,
+        info
+      })
+    }
+  </script>
 
   <title>{{title}}</title>
 </head>
@@ -41,6 +56,15 @@
   <script src="/vendor/prismjs/prism.js"></script>
 
   <script src="https://buttons.github.io/buttons.js"></script>
+
+  <script src='/js/cytoscape.min.js'></script>
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src='/js/cytoscape-popper.js'></script>
+  <script src='/js/cytoscape-edgehandles.js'></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
+
+  <script src="/js/graph.js"></script>
   <script src="/js/script.js"></script>
 </body>
+
 </html>
