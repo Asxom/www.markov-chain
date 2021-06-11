@@ -10,69 +10,119 @@
 
     <div class='container'>
       <div class='row justify-content-center'>
+
+        <div class='col-6'>
+          <div class='form-group'>
+            <label>Matriz de probabilidades</label>
+            <textarea
+              id="text-area"
+              class='form-control font-medium'
+              :rows='controls.textAreaRows'
+              v-model='pMatrix'
+            ></textarea>
+          </div>
+        </div>
+
+        <div class='col-6'>
+          <label>Previsualizacion</label>
+          <div id="preview-matrix"
+          class='table-responsive-sm shadow-soft rounded overflow-auto overflow-auto'>
+            <table class='table'>
+              <colgroup>
+                <col span="1" style="width: 15%;">
+             </colgroup>
+
+              <tr>
+                <th scope="col" class='border-0'>&nbsp;</th>
+                <th scope="col"
+                  v-for='(row, index) in matrix.length'
+                  class='border-0 text-center'
+                  :key='index'
+                >
+                  \{{ index }}
+                </th>
+              </tr>
+
+              <tr v-for='(row, x) in matrix' :key='x'>
+                <th scope="col" class='border-0 text-center'>\{{x}}</th>
+
+                <template v-for='(cell, y) in row' :key='y'>
+                  <td scope="col" class="text-center border-0">
+                    \{{ cell }}
+                  </td>
+                </template>
+              </tr>
+
+            </table>
+          </div>
+        </div>
+
+        <div class='col-4'>
+          <label class='form-text'>
+            Separe por espacios los valores
+          </label>
+          <div class='input-group mb-4'>
+            <div class='input-group-prepend'>
+              <span class='input-group-text'>P<sub>(0)</sub>=</span>
+            </div>
+            <input
+              :class="{'bg-red-solid': matrix.length != p_0.length}"
+              class='form-control'
+              placeholder=''
+              v-model='p_n'
+            />
+          </div>
+        </div>
+        <div class='col-3 mb-5'>
+          <label class='form-text'>
+            Calcular P
+            <sub>&lpar;n&rpar;</sub>
+          </label>
+          <div class='d-flex flex-row justify-content-center'><div
+              class='input-group'
+            >
+              <input
+                class='form-control form-control border-light'
+                type="number"
+                placeholder=''
+                v-model.number='pow'
+              />
+              <div class='input-group-prepend'>
+                <button
+                  v-on:click.stop.prevent='calculateMatrix'
+                  class='btn btn-primary rounded-right'
+                >
+                  Calcular P<sub>&lpar;\{{pow}}&rpar;</sub>
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div class='col-10'>
+          <template v-for='(P, index) in resultsP_n' :key='index'>
+            <div class='alert alert-secondary shadow-soft'>
+              <span class='alert-inner--text'>
+                P<sub>\{{index + 1}}</sub>
+                = [
+                <template v-for='(item, index) in P'>
+                  \{{item.toFixed(2) }}
+                  <span v-if='index < P.length - 1'>,</span>
+                </template>
+                ]
+              </span>
+            </div>
+          </template>
+        </div>
         <div class='col-12'>
 
           <div
-            id='input-slider-range'
-            :data-range-value-min='nodes.min'
-            :data-range-value-max='nodes.max'
+            id='cy'
+            style='height: 350px;'
+            class='card bg-primary shadow-inset border-light'
           >
-          </div>
-          <div class='row d-none'>
-            <div class='col-6'>
-              <span
-                class='range-slider-value value-low'
-                :data-range-value-low='nodes.default'
-                id='input-slider-range-value-low'
-              >
-              </span>
-            </div>
-          </div>
-
-        </div>
-        <div class='col-6'>
-          <div class='mb-5'>
-            <div
-              class='table-responsive-sm shadow-soft rounded overflow-auto'
-              style='height: 350px;'
-            >
-              <table class='table'>
-                <tbody>
-                  <tr>
-                    <th class='border-0'>&nbsp;</th>
-                    <th
-                      v-for='(row, index) in matrix.length'
-                      class='border-0 text-center'
-                      :key='index'
-                    >
-                      \{{ index }}
-                    </th>
-                  </tr>
-
-                  <tr v-for='(row, x) in matrix' :key='x'>
-                    <th class='border-0'>\{{x}}</th>
-
-                    <template v-for='(cell, y) in row' :key='y'>
-                      <c-cell
-                        class='border-0'
-                        v-model.number='cell.value'
-                        :title="x+', '+y"
-                      ></c-cell>
-                    </template>
-                  </tr>
-
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <div class='col-6'>
-
-          <div
-          id='cy'
-          style='height: 350px;'
-          class='card bg-primary shadow-inset border-light'>
 
           </div>
 

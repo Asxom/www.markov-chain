@@ -1,64 +1,72 @@
-app.conf = {
-  nodes: {
-    min: 2,
-    max: 10,
-    default: 3
-  }
+app.config = {
+  rowText: 6
 }
-app.graph = {
-  cy: cytoscape({
-    container: document.getElementById('cy'),
-    zoomingEnabled: false,
-    style: [
-      {
-        selector: 'node',
-        style: {
-          content: 'data(id)'
-        }
-      },
-      {
-        selector: 'edge',
-        style: {
-          'curve-style': 'bezier',
-          'target-arrow-shape': 'triangle',
-          content: 'data(id)'
+app.utils = {
+  toFloat: function (x) {
+    return parseFloat(x.replace(/\,/g, '.'))
+  },
+  normalizeMatrix: function (stringMatrix) {
+    let matrix = []
+    let arr = stringMatrix.split(/\n/g)
+
+    if (arr) {
+      for (let i = 0; i < arr.length; ++i) {
+        let rowRaw = arr[i].trim().split(/\s/g)
+        if (rowRaw != '') {
+          matrix[i] = rowRaw.map(app.utils.toFloat)
         }
       }
-    ],
-    elements: {
-      nodes: [{ data: { id: 'a' } }, { data: { id: 'b' } }],
-      edges: [{ data: { id: 'ab', source: 'a', target: 'b' } }]
-    },
-    layout: {
-      name: 'grid'
+    } else {
+      return []
     }
-  })
+
+    return matrix
+  },
+  normalizeProbabilityVector: function (stringP) {
+    let p = stringP.trim().split(/\s/g)
+
+    if (p) {
+      return p.map(app.utils.toFloat)
+    } else {
+      return []
+    }
+  },
+  math: {
+    matrix: {
+      multiply: function (objA, objB) {
+        return math.multiply(objA, objB)
+      }
+    }
+  }
 }
 
 app.markovChain = new Vue({
   el: '#app-markov',
   data: {
-    nodes: {
-      min: app.conf.nodes.min,
-      max: app.conf.nodes.max,
-      default: app.conf.nodes.default
-    },
-    matrix: []
+    nodes: 0,
+    p_n: '',
+    pMatrix: `0,2 0,8\n0,3 0,7`,
+    matrix: [],
+    p_0: [],
+    resultsP_n: [],
+    pow: 1,
+    controls:{
+      textAreaRows: app.config.rowText
+    }
+  },
+  created: function () {
+    this.p_0 = app.utils.normalizeProbabilityVector(this.p_n)
+    this.matrix = app.utils.normalizeMatrix(this.pMatrix)
   },
   methods: {
-    getMatrix: function (orden) {
-      orden = orden || app.conf.nodes.default
-      let matrix = []
-      for (let i = 0; i < orden; ++i) {
-        matrix[i] = []
-        for (let j = 0; j < orden; ++j) {
-          matrix[i][j] = {
-            value: 0
-          }
-        }
+    calculateMatrix: function () {
+      this.resultsP_n = []
+      let p_i = this.p_0
+
+      for (let i = 0; i < this.pow; ++i) {
+        p_i = app.utils.math.matrix.multiply(p_i, this.matrix)
+        this.resultsP_n.push(p_i)
       }
-      //this.addNodes(matrix)
-      this.matrix = matrix
     },
     addNodes: function (matrix) {
       for (let i = 0; i < matrix.length; ++i) {
@@ -69,46 +77,21 @@ app.markovChain = new Vue({
       }
     }
   },
-  computed: {},
-  created: function () {
-    this.getMatrix()
+  watch: {
+    p_n: function (val) {
+      this.p_0 = app.utils.normalizeProbabilityVector(val)
+    },
+    pMatrix: function (val) {
+      this.matrix = app.utils.normalizeMatrix(val)
+    }
   }
 })
 
-Vue.component('c-cell', {
-  props: ['title', 'value'],
-  template: `
-   <td class='border-0'>
-     <input
-       style='min-width: 100px;'
-       type='number'
-       class='form-control'
-       :value="value"
-       @input="$emit('input', $event.target.value)"
-       :title="title"
-       placeholder=""
-     />
-     <small class='form-text text-muted'>
-      {{title}}
-     </small>
-   </td>
-   `
-})
+$(
+  (function () {
+    let textArea = document.getElementById('text-area')
+    let tableMatrix = document.getElementById('preview-matrix')
 
-const c = document.getElementById('input-slider-range')
-var f = [document.getElementById('input-slider-range-value-low')]
-
-noUiSlider.create(c, {
-  start: [app.conf.nodes.default],
-  step: 1,
-  connect: true,
-  tooltips: true,
-  range: {
-    min: app.conf.nodes.min,
-    max: app.conf.nodes.max
-  }
-})
-c.noUiSlider.on('update', function (a, b) {
-  f[b].textContent = a[b]
-  app.markovChain.getMatrix(+a[b])
-})
+    tableMatrix.style.height = textArea.offsetHeight + 'px'
+  })()
+)

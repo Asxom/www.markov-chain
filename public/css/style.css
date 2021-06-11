@@ -24,3 +24,7 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.bg-red-solid{
+  border: 1px red solid;
+}
