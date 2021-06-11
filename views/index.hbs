@@ -11,7 +11,7 @@
     <div class='container'>
       <div class='row justify-content-center'>
 
-        <div class='col-6'>
+        <div class='col-md-6 col-12'>
           <div class='form-group'>
             <label>Matriz de probabilidades</label>
             <textarea
@@ -23,7 +23,7 @@
           </div>
         </div>
 
-        <div class='col-6'>
+        <div class='col-md-6 col-12'>
           <label>Previsualizacion</label>
           <div id="preview-matrix"
           class='table-responsive-sm shadow-soft rounded overflow-auto overflow-auto'>
@@ -57,7 +57,7 @@
           </div>
         </div>
 
-        <div class='col-4'>
+        <div class='col-md-4 col-12'>
           <label class='form-text'>
             Separe por espacios los valores
           </label>
@@ -73,7 +73,7 @@
             />
           </div>
         </div>
-        <div class='col-3 mb-5'>
+        <div class='col-md-3 col-12 mb-5 '>
           <label class='form-text'>
             Calcular P
             <sub>&lpar;n&rpar;</sub>
@@ -101,7 +101,7 @@
 
         </div>
 
-        <div class='col-10'>
+        <div class='col-md-10 col-12'>
           <template v-for='(P, index) in resultsP_n' :key='index'>
             <div class='alert alert-secondary shadow-soft'>
               <span class='alert-inner--text'>
@@ -116,7 +116,7 @@
             </div>
           </template>
         </div>
-        <div class='col-6'>
+        <div class='col-md-6 col-12'>
           <label class='form-text'>
             Visualizacion Grafo
           </label>
