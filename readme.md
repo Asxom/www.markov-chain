@@ -21,7 +21,8 @@ En la parte derecha solo se mostrara una previsualizacion de la tabla actual
 #### Creacion de Probabilidad inicial
 <img src="./docs/SegundaSeccion.png" width="80%"/>
 
-Para la probabilidad inicial separe por espacios los valores
+Para la probabilidad inicial separe por espacios los valores, si el valor es invalido se mostrara en un borde rojo
+a la derecha una entrada numerica para generar las siguientes probabilidades
 
 Ejemplo
 
