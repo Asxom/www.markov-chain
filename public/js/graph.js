@@ -1,12 +1,19 @@
-app.graph = {
-  cy: cytoscape({
+document.addEventListener('DOMContentLoaded', function () {
+  cy = window.cy = cytoscape({
     container: document.getElementById('cy'),
-    zoomingEnabled: false,
+
+    layout: {
+      name: 'avsdf',
+      nodeSeparation: 300
+    },
     style: [
       {
         selector: 'node',
         style: {
-          content: 'data(id)'
+          label: 'data(id)',
+          'text-valign': 'center',
+          color: '#fff',
+          'background-color': '#8DAE56'
         }
       },
       {
@@ -14,18 +21,15 @@ app.graph = {
         style: {
           'curve-style': 'bezier',
           'target-arrow-shape': 'triangle',
-          content: 'data(id)'
+          label: 'data(weight)',
+          width: 2,
+          'line-color': '#B2BABB',
+          'color':'#000',
+          opacity: 0.5
         }
       }
-    ],
-    elements: {
-      nodes: [{ data: { id: 'a' } }, { data: { id: 'b' } }],
-      edges: [{ data: { id: 'ab', source: 'a', target: 'b' } }]
-    },
-    layout: {
-      name: 'grid'
-    }
+    ]
   })
-}
 
-const autoLoad = (function () {})()
+  app.markovChain.drawGraph()
+})

@@ -1,5 +1,5 @@
 app.config = {
-  rowText: 6
+  rowText: 8
 }
 app.utils = {
   toFloat: function (x) {
@@ -50,7 +50,7 @@ app.markovChain = new Vue({
     p_0: [],
     resultsP_n: [],
     pow: 1,
-    controls:{
+    controls: {
       textAreaRows: app.config.rowText
     }
   },
@@ -68,13 +68,61 @@ app.markovChain = new Vue({
         this.resultsP_n.push(p_i)
       }
     },
-    addNodes: function (matrix) {
-      for (let i = 0; i < matrix.length; ++i) {
-        app.graph.cy.add({
-          group: 'nodes',
-          id: '' + i
+    drawGraph: function (matrix) {
+
+      matrix = matrix || this.matrix
+      cy.remove('node')
+      cy.remove('edge')
+      if (this.isValidMatrix) {
+
+        let elements = []
+
+        for (let i = 0; i < matrix.length; ++i) {
+          elements.push({ group: 'nodes', data: { id: '' + i } })
+          for (let j = 0; j < matrix[i].length; ++j) {
+
+            if (matrix[i][j] != 0) {
+
+              elements.push({
+                group: 'edges',
+                data: {
+                  source: '' + i,
+                  target: '' + j,
+                  weight: '' + matrix[i][j]
+                }
+              })
+            }
+          }
+        }
+
+        var addedItems = cy.add(elements)
+
+        var layout = cy.layout({
+          name: 'avsdf',
+          refresh: 1,
+          animate: 'during',
+          animationDuration: 1000,
+          animationEasing: 'ease-in-out',
+          nodeSeparation: 300
         })
+        layout.run()
+        cy.center()
+        cy.fit(addedItems, '600px')
       }
+    }
+  },
+  computed: {
+    isValidMatrix: function () {
+      let needElements = this.matrix.length * this.matrix.length
+      let realCountElements = 0
+
+      for (let i = 0; i < this.matrix.length; ++i) {
+        for (let j = 0; j < this.matrix[i].length; ++j) {
+          realCountElements++
+        }
+      }
+
+      return needElements === realCountElements
     }
   },
   watch: {
@@ -83,15 +131,13 @@ app.markovChain = new Vue({
     },
     pMatrix: function (val) {
       this.matrix = app.utils.normalizeMatrix(val)
+      this.drawGraph(this.matrix)
     }
   }
 })
+const autoLoadInputControls = (function () {
+  let textArea = document.getElementById('text-area')
+  let tableMatrix = document.getElementById('preview-matrix')
 
-$(
-  (function () {
-    let textArea = document.getElementById('text-area')
-    let tableMatrix = document.getElementById('preview-matrix')
-
-    tableMatrix.style.height = textArea.offsetHeight + 'px'
-  })()
-)
+  tableMatrix.style.height = textArea.offsetHeight + 'px'
+})()
